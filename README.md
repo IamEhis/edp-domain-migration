@@ -1,43 +1,61 @@
-# Project Name
+# EDP Domain Migration
 
 ## Overview
 
-Brief description of project goals and context
+Practice programme modelling the migration of business-owned data domains to a
+Databricks lakehouse (Unity Catalog, medallion architecture, declarative pipelines).
 
-## Getting Started
+The focus is the business analysis side of a migration: eliciting requirements from
+domain owners and stewards, defining data contracts, writing source-to-target
+mappings and DQ expectations, and gating each domain through a readiness checklist
+before it enters build.
 
-Prerequisites and setup instructions
+Work is planned and tracked in Azure Boards. This repository holds the
+documentation that lives alongside the code.
+
+## Scope
+
+| Domain | Data products | Depends on |
+|---|---|---|
+| Reference Data | Security Master | – |
+| Fixed Income | Daily Positions, Transactions | Security Master |
+
+## Key Stakeholders (roles)
+
+- **Domain Owner**: accountable for business priority and definitions
+- **Data Steward**: owns data quality rules and semantic definitions
+- **Business Analyst / Backlog Owner**: requirements, contracts, backlog, dependencies
+- **Data Engineers**: build pipelines and enforce contracts
+- **Delivery Manager**: delivery plan, capacity, escalation to steering
+
+## Success Criteria
+
+- Every migrated data product has an agreed data contract (schema, semantics,
+  DQ rules with severity, SLA, ownership, access)
+- No domain enters build without passing the readiness checklist
+- Gold tables reconcile to source within agreed tolerance
+- Cross-domain dependencies are visible and tracked before they block delivery
+
+## Repository Structure
+
+| Folder | Contents |
+|---|---|
+| `contracts/` | Data contracts per data product (ODCS-style YAML) |
+| `mappings/` | Source-to-target mappings |
+| `readiness/` | Domain migration readiness checklists |
+| `docs/` | Glossary, ways of working, decisions |
 
 ## Workflow Guidelines
 
-- Issue creation and labeling standards
-- Review and approval processes
-- Communication protocols
+- **Hierarchy:** Epic (domain) → Feature (data product) → User Story → Task
+- **Definition of Ready:** target table and grain defined, source-to-target mapping
+  linked, DQ rules with severity agreed, acceptance criteria testable
+- **Definition of Done:** acceptance criteria met, DQ expectations passing,
+  documentation updated, steward sign-off
+- **Labels:** `type:epic`, `type:feature`, `type:story`, `domain:fixed-income`,
+  `domain:reference-data`, `status:blocked`, `contract-pending`
+- **Dependencies:** recorded as "Blocked by #issue" and labelled `status:blocked`
 
 ## Team Information
 
-Contact details and responsibilities
-
-# Customer Portal Enhancement Project
-
-## Project Overview
-
-Modernize customer self-service portal to improve user experience and reduce support ticket volume by 30%.
-
-## Key Stakeholders
-
-- **Product Owner**: Name (email@company.com)
-- **Tech Lead**: Name (email@company.com)
-- **UX Designer**: Name (email@company.com)
-
-## Success Metrics
-
-- Page load time < 2 seconds
-- User satisfaction score > 4.2/5
-- Support ticket reduction of 30%
-
-## Workflow Standards
-
-- All features require design review before development
-- Security review mandatory for user-facing changes
-- Performance testing required for all releases
+Maintained by Ehis Jegbefumwen ([GitHub](https://github.com/IamEhis)).
